@@ -18,6 +18,7 @@ import fetchRandomBooks from "@/lib/fetch-random-books";
       allBooks,
       recoBooks,
     },
+    revalidate :3
   };
  };
 
