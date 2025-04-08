@@ -1,23 +1,11 @@
 import SearchableLayout from "@/componenets/searchable-layout";
 import { ReactNode, useEffect, useState } from "react";
 import BookItem from "@/componenets/book-item";
-import { GetServerSidePropsContext, GetStaticPropsContext, InferGetServerSidePropsType } from "next";
 import fetchBooks from "@/lib/fetch-books";
 import { useRouter } from "next/router";
 import { BookData } from "@/types";
+import Head from "next/head";
 
-// export const getStaticProps = async (
-//     context : GetStaticPropsContext
-// ) => {
-//     const q = context.query.q;
-//     const books = await fetchBooks(q as string)
-
-//     return {
-//         props: {
-//             books,
-//         },
-//     };
-// };
 
 export default function Page(){
     const [books, setBooks] = useState<BookData[]>([]);
@@ -32,17 +20,25 @@ export default function Page(){
 
     useEffect(()=> {
         if (q) {
-            //검색 결과를 불러오는 로직
             fetchSearchResult();
         }
     }, [q]);
 
-    return (
-    <div>
+    return (<>
+        <Head>
+            <title>한입북스-검색결과</title>
+            <meta property="og:image" content="/thumbnail.png"/>
+            <meta property="og:title" content="한입북스-검색결과"/>
+            <meta
+            property="og:description"
+            content="한입 북스에 등록된 도서를 만나보세요"/>
+        </Head>
+        <div>
         {books.map((book) => (
             <BookItem key={book.id} {...book}/>
     ))}
     </div>
+    </>
     );
 
 }
